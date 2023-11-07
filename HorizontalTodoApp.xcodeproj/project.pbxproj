@@ -14,6 +14,7 @@
 		1C23779E2AFA51A70091AE2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C23779D2AFA51A70091AE2C /* Assets.xcassets */; };
 		1C2377A12AFA51A70091AE2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C23779F2AFA51A70091AE2C /* LaunchScreen.storyboard */; };
 		1C2377A92AFA532F0091AE2C /* TodoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1C2377A82AFA532F0091AE2C /* TodoCell.xib */; };
+		1C2377AB2AFA54150091AE2C /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2377AA2AFA54150091AE2C /* TodoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		1C2377A02AFA51A70091AE2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1C2377A22AFA51A70091AE2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C2377A82AFA532F0091AE2C /* TodoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoCell.xib; sourceTree = "<group>"; };
+		1C2377AA2AFA54150091AE2C /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				1C2377942AFA51A40091AE2C /* AppDelegate.swift */,
 				1C2377962AFA51A40091AE2C /* SceneDelegate.swift */,
+				1C2377AA2AFA54150091AE2C /* TodoCell.swift */,
 				1C2377A82AFA532F0091AE2C /* TodoCell.xib */,
 				1C2377982AFA51A40091AE2C /* ViewController.swift */,
 				1C23779A2AFA51A40091AE2C /* Main.storyboard */,
@@ -145,6 +148,7 @@
 				1C2377992AFA51A40091AE2C /* ViewController.swift in Sources */,
 				1C2377952AFA51A40091AE2C /* AppDelegate.swift in Sources */,
 				1C2377972AFA51A40091AE2C /* SceneDelegate.swift in Sources */,
+				1C2377AB2AFA54150091AE2C /* TodoCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

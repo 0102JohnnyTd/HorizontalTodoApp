@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TodoCell" customModule="HorizontalTodoApp" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -27,6 +27,9 @@
                 <constraint firstItem="mq8-3m-9IV" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="dB6-CI-hZR"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="nameLabel" destination="mq8-3m-9IV" id="O8G-c8-Pvh"/>
+            </connections>
             <point key="canvasLocation" x="131" y="-11"/>
         </view>
     </objects>
