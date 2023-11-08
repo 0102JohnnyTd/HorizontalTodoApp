@@ -152,5 +152,13 @@ extension ViewController {
     }
 }
 
+extension ViewController {
+    /// タップしたCellを削除する
+    private func clearTodo(todo: String) {
+        todoList.removeAll { $0.contains(todo) }
+        applySnapshot(todoList: todoList)
+    }
+}
+
 extension ViewController: UICollectionViewDelegate {}
 
