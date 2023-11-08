@@ -29,7 +29,7 @@ final class ViewController: UIViewController {
     }
 
     /// アプリに表示させるドメインデータを要素とした配列
-    private let todos = ["タスク1", "タスク2", "タスク3", "タスク4", "タスク5"]
+    private var todoList = ["タスク1", "タスク2", "タスク3", "タスク4", "タスク5"]
 
     ///  CollectionViewに表示するデータを管理
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
@@ -37,7 +37,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
-        applyInitialSnapshots(todos: todos)
+        applyInitialSnapshots(todos: todoList)
     }
 
     // Cellのレイアウトを構築
@@ -141,6 +141,14 @@ extension ViewController {
         todoSnapshot.append(todoItems)
         // snapshotをdataSourceに適用し、todoListに追加
         dataSource.apply(todoSnapshot, to: .todoList, animatingDifferences: true)
+    }
+//    /// 新たなsnapshotをDataSourceにapplyしてデータ更新
+    private func applySnapshot(todoList: [String]) {
+        var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
+        let todoItems = todoList.map { Item.todo($0) }
+
+        snapshot.append(todoItems)
+        dataSource.apply(snapshot, to: .todoList, animatingDifferences: true)
     }
 }
 
