@@ -160,5 +160,14 @@ extension ViewController {
     }
 }
 
-extension ViewController: UICollectionViewDelegate {}
+extension ViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let listItem = dataSource.itemIdentifier(for: indexPath) else { return }
+
+        switch listItem {
+        case .todo(let todo):
+            clearTodo(todo: todo)
+        }
+    }
+}
 
