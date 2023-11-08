@@ -37,6 +37,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
+        applyInitialSnapshots(todos: todos)
     }
 
     // Cellのレイアウトを構築
@@ -120,6 +121,26 @@ extension ViewController {
             }
         }
         return layout
+    }
+}
+
+extension ViewController {
+    private func applyInitialSnapshots(todos: [String]) {
+        // データをViewに反映させる為のDiffableDataSourceSnapshotクラスのインスタンスを生成
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+
+        // snapshotにSectionを追加
+        snapshot.appendSections(Section.allCases)
+        dataSource.apply(snapshot)
+
+        // dataSourceに適応させるSectionSnapshotのインスタンスを生成
+        var todoSnapshot = NSDiffableDataSourceSectionSnapshot<Item>()
+        // String型の値をItem型に変換した配列を生成
+        let todoItems = todos.map { Item.todo($0) }
+        // Item型に変換したtodosを生成したSnapshotに追加
+        todoSnapshot.append(todoItems)
+        // snapshotをdataSourceに適用し、todoListに追加
+        dataSource.apply(todoSnapshot, to: .todoList, animatingDifferences: true)
     }
 }
 
