@@ -43,6 +43,7 @@ final class ViewController: UIViewController {
     private func setUpCollectionView() {
         collectionView.delegate = self
         configureHierarchy()
+        configureDataSource()
     }
 }
 
@@ -51,6 +52,31 @@ extension ViewController {
         collectionView.collectionViewLayout = createLayout()
         // TodoCellを登録
         collectionView.register(TodoCell.self, forCellWithReuseIdentifier: TodoCell.identifier)
+    }
+
+    /// Datasourceを構築
+    private func configureDataSource() {
+        // Cellの登録
+        let todoCellRegistration = UICollectionView.CellRegistration<TodoCell, Item>(cellNib: TodoCell.nib) { cell, _, item in
+            switch item {
+            case .todo(let todo):
+                cell.layer.cornerRadius = cell.frame.width * 0.5
+                cell.configure(name: todo)
+            }
+        }
+
+        // dataSourceの構築
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { collectionView, indexPath, item -> UICollectionViewCell? in
+            guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section") }
+            switch section {
+            case .todoList:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: todoCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            }
+        })
     }
 }
 
@@ -76,11 +102,11 @@ extension ViewController {
 
                 // Groupのサイズを定義
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalWidth(0.2))
-
                 // Groupを生成
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                                repeatingSubitem: item,
                                                                count: columns)
+                
                 // Sectionを生成
                 section = NSCollectionLayoutSection(group: group)
                 // Section間のスペース
