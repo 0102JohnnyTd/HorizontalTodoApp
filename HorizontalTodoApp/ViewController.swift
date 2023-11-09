@@ -51,8 +51,6 @@ final class ViewController: UIViewController {
 extension ViewController {
     private func configureHierarchy() {
         collectionView.collectionViewLayout = createLayout()
-        // TodoCellを登録
-        collectionView.register(TodoCell.self, forCellWithReuseIdentifier: TodoCell.identifier)
     }
 
     /// Datasourceを構築
@@ -142,7 +140,7 @@ extension ViewController {
         // snapshotをdataSourceに適用し、todoListに追加
         dataSource.apply(todoSnapshot, to: .todoList, animatingDifferences: true)
     }
-//    /// 新たなsnapshotをDataSourceにapplyしてデータ更新
+    /// 新たなsnapshotをDataSourceにapplyしてデータ更新
     private func applySnapshot(todoList: [String]) {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         let todoItems = todoList.map { Item.todo($0) }
