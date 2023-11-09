@@ -13,6 +13,7 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var addTodoButton: UIButton!
 
     @IBAction private func didTapAddTodoButton(_ sender: Any) {
+        showAddTodoVC()
     }
     
     /// DiffableDataSourceに渡すItemを管理
@@ -69,6 +70,18 @@ final class ViewController: UIViewController {
         collectionView.delegate = self
         configureHierarchy()
         configureDataSource()
+    }
+
+    private func showAddTodoVC() {
+        let addTodoVC = UIStoryboard(name: AddTodoViewController.storyboardName, bundle: nil).instantiateViewController(withIdentifier: AddTodoViewController.identifier) as! AddTodoViewController
+
+        addTodoVC.todoList = self.todoList
+        addTodoVC.completion = { text in
+            self.todoList.append(text)
+            self.applySnapshot(todoList: self.todoList)
+        }
+
+        present(addTodoVC, animated: true)
     }
 }
 
