@@ -10,6 +10,11 @@ import UIKit
 final class ViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
 
+    @IBOutlet private weak var addTodoButton: UIButton!
+
+    @IBAction private func didTapAddTodoButton(_ sender: Any) {
+    }
+    
     /// DiffableDataSourceに渡すItemを管理
     private enum Item: Hashable {
         case todo(String)
@@ -37,7 +42,26 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
+        configureButton()
         applyInitialSnapshots(todos: todoList)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureButtonSize()
+    }
+
+    private func configureButton() {
+        addTodoButton.backgroundColor = .green
+        addTodoButton.layer.masksToBounds = true
+    }
+
+    private func configureButtonSize() {
+        let buttonWidth = view.frame.width * 0.2
+        let buttonHeight = buttonWidth
+        addTodoButton.frame.size = CGSize(width: buttonWidth, height: buttonHeight)
+
+        addTodoButton.layer.cornerRadius = addTodoButton.frame.width * 0.5
     }
 
     // Cellのレイアウトを構築

@@ -28,23 +28,37 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLF-ri-7Jy">
+                                <rect key="frame" x="310.66666666666669" y="724" width="50.333333333333314" height="62"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="+">
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="40"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="didTapAddTodoButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lzh-vV-Jcd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemMintColor"/>
                         <constraints>
                             <constraint firstItem="Zgq-YN-YHq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="CXX-4X-6Wb"/>
                             <constraint firstItem="Zgq-YN-YHq" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Lxh-yo-tc4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tLF-ri-7Jy" secondAttribute="bottom" constant="32" id="arz-ba-Psa"/>
                             <constraint firstItem="Zgq-YN-YHq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="cDH-jl-C4c"/>
                             <constraint firstItem="Zgq-YN-YHq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="j7P-4l-lr4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tLF-ri-7Jy" secondAttribute="trailing" constant="32" id="meF-Qx-JFw"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addTodoButton" destination="tLF-ri-7Jy" id="AoU-DT-q8e"/>
                         <outlet property="collectionView" destination="Zgq-YN-YHq" id="BCL-Qa-UF0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="65" y="-34"/>
+            <point key="canvasLocation" x="64.885496183206101" y="-34.507042253521128"/>
         </scene>
     </scenes>
     <resources>
