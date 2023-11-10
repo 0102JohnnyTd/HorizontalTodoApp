@@ -250,7 +250,7 @@ extension ViewController {
 
     private func addTimeLineContent(todo: String) {
         print(#function)
-        timelineContentList.append(todo)
+        timelineContentList.insert(todo, at: 0)
         print("timelineContentList:", timelineContentList)
         applyTimeLineSnapshot(timelineContents: timelineContentList)
     }
