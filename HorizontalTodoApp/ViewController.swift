@@ -39,6 +39,7 @@ final class ViewController: UIViewController {
 
     /// アプリに表示させるドメインデータを要素とした配列
     private var todoList = ["タスク1", "タスク2", "タスク3", "タスク4", "タスク5"]
+    private var timelineContentList = ["ゴリラに水やり", "トマトにバナナあげる"]
 
     ///  CollectionViewに表示するデータを管理
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
@@ -80,7 +81,7 @@ final class ViewController: UIViewController {
 
         addTodoVC.completion = { text in
             self.todoList.append(text)
-            self.applySnapshot(todoList: self.todoList)
+            self.applyTodoSnapshot(todoList: self.todoList)
         }
 
         present(addTodoVC, animated: true)
@@ -217,26 +218,41 @@ extension ViewController {
         dataSource.apply(todoSnapshot, to: .todoList, animatingDifferences: true)
 
         var timeLineItemSnapshot = NSDiffableDataSourceSectionSnapshot<Item>()
-        var timelineContentList = ["ゴリラに水やり", "トマトにバナナあげる"]
         let timelineItems = timelineContentList.map { Item.todo($0) }
         timeLineItemSnapshot.append(timelineItems)
         dataSource.apply(timeLineItemSnapshot, to: .timeLine, animatingDifferences: true)
     }
     /// 新たなsnapshotをDataSourceにapplyしてデータ更新
-    private func applySnapshot(todoList: [String]) {
+    private func applyTodoSnapshot(todoList: [String]) {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         let todoItems = todoList.map { Item.todo($0) }
 
         snapshot.append(todoItems)
         dataSource.apply(snapshot, to: .todoList, animatingDifferences: true)
     }
+
+    private func applyTimeLineSnapshot(timelineContents: [String]) {
+        var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
+        let timeLineItems = timelineContents.map { Item.todo($0) }
+
+        snapshot.append(timeLineItems)
+        dataSource.apply(snapshot, to: .timeLine, animatingDifferences: true)
+    }
 }
 
 extension ViewController {
     /// タップしたCellを削除する
-    private func clearTodo(todo: String) {
+    private func clearTodo(todo: String, completion: () -> Void) {
         todoList.removeAll { $0.contains(todo) }
-        applySnapshot(todoList: todoList)
+        applyTodoSnapshot(todoList: todoList)
+        completion()
+    }
+
+    private func addTimeLineContent(todo: String) {
+        print(#function)
+        timelineContentList.append(todo)
+        print("timelineContentList:", timelineContentList)
+        applyTimeLineSnapshot(timelineContents: timelineContentList)
     }
 }
 
@@ -246,7 +262,9 @@ extension ViewController: UICollectionViewDelegate {
 
         switch listItem {
         case .todo(let todo):
-            clearTodo(todo: todo)
+            clearTodo(todo: todo) {
+                addTimeLineContent(todo: todo)
+            }
         }
     }
 }
