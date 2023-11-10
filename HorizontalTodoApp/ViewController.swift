@@ -15,7 +15,7 @@ final class ViewController: UIViewController {
     @IBAction private func didTapAddTodoButton(_ sender: Any) {
         showAddTodoVC()
     }
-    
+
     /// DiffableDataSourceに渡すItemを管理
     private enum Item: Hashable {
         case todo(String)
@@ -24,11 +24,14 @@ final class ViewController: UIViewController {
     // データソースに追加するSection
     private enum Section: Int, CaseIterable {
         case todoList
+        case timeLine
 
         // Sectionごとの列数を返す
         var columnCount: Int {
             switch self {
             case .todoList:
+                return 1
+            case .timeLine:
                 return 1
             }
         }
@@ -91,12 +94,20 @@ extension ViewController {
 
     /// Datasourceを構築
     private func configureDataSource() {
-        // Cellの登録
+        // TodoCellの登録
         let todoCellRegistration = UICollectionView.CellRegistration<TodoCell, Item>(cellNib: TodoCell.nib) { cell, _, item in
             switch item {
             case .todo(let todo):
                 cell.layer.cornerRadius = cell.frame.width * 0.5
                 cell.configure(name: todo)
+            }
+        }
+
+        // TimeLineCellの登録
+        let timeLineCellRegistration = UICollectionView.CellRegistration<TimeLineCell, Item>(cellNib: TimeLineCell.nib) { cell, _, item in
+            switch item {
+            case .todo(let todo):
+                cell.configure(todo: todo)
             }
         }
 
@@ -107,6 +118,12 @@ extension ViewController {
             case .todoList:
                 return collectionView.dequeueConfiguredReusableCell(
                     using: todoCellRegistration,
+                    for: indexPath,
+                    item: item
+                )
+            case .timeLine:
+                return collectionView.dequeueConfiguredReusableCell(
+                    using: timeLineCellRegistration,
                     for: indexPath,
                     item: item
                 )
@@ -141,7 +158,7 @@ extension ViewController {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                                repeatingSubitem: item,
                                                                count: columns)
-                
+
                 // Sectionを生成
                 section = NSCollectionLayoutSection(group: group)
                 // Section間のスペース
@@ -150,6 +167,29 @@ extension ViewController {
                 section.orthogonalScrollingBehavior = .continuous
                 // Sectionの上下左右間隔を指定
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+                return section
+            case .timeLine:
+                // Itemのサイズを定義
+                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+                // Itemを生成
+                let item = NSCollectionLayoutItem(layoutSize: itemSize)
+                // Itemの上下左右間隔を指定
+                item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 4, bottom: 4, trailing: 4)
+
+                // Groupのサイズを定義
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
+                // Groupを生成
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                               repeatingSubitem: item,
+                                                               count: columns)
+
+                // Sectionを生成
+                section = NSCollectionLayoutSection(group: group)
+                // Section間のスペース
+                section.interGroupSpacing = 10
+                // Sectionの上下左右間隔を指定
+                section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
 
                 return section
             }
@@ -175,6 +215,12 @@ extension ViewController {
         todoSnapshot.append(todoItems)
         // snapshotをdataSourceに適用し、todoListに追加
         dataSource.apply(todoSnapshot, to: .todoList, animatingDifferences: true)
+
+        var timeLineItemSnapshot = NSDiffableDataSourceSectionSnapshot<Item>()
+        var timelineContentList = ["ゴリラに水やり", "トマトにバナナあげる"]
+        let timelineItems = timelineContentList.map { Item.todo($0) }
+        timeLineItemSnapshot.append(timelineItems)
+        dataSource.apply(timeLineItemSnapshot, to: .timeLine, animatingDifferences: true)
     }
     /// 新たなsnapshotをDataSourceにapplyしてデータ更新
     private func applySnapshot(todoList: [String]) {

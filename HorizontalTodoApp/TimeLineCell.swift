@@ -20,10 +20,10 @@ final class TimeLineCell: UICollectionViewCell {
 
     private func setUpBackgroundView() {
         backgroundView = UIView(frame: super.frame)
-        backgroundView?.backgroundColor = .systemBackground
+        backgroundView?.backgroundColor = .systemGray6
     }
 
     func  configure(todo: String) {
-        descriptionLabel.text = "『\(todo)を完了しました』"
+        descriptionLabel.text = "『\(todo)』を完了しました"
     }
 }
