@@ -40,6 +40,7 @@ final class ViewController: UIViewController {
 
     /// アプリに表示させるドメインデータを要素とした配列
     private var todoList = ["タスク1", "タスク2", "タスク3", "タスク4", "タスク5"]
+    /// アプリに表示させるドメインデータを要素とした配列
     private var timelineContentList = ["ゴリラに水やり", "トマトにバナナあげる"]
 
     ///  CollectionViewに表示するデータを管理
@@ -57,25 +58,20 @@ final class ViewController: UIViewController {
         addTodoButton.layer.cornerRadius = addTodoButton.frame.width * 0.5
     }
 
+    /// ボタンのUIを構築
     private func configureButton() {
         addTodoButton.backgroundColor = .green
         addTodoButton.layer.masksToBounds = true
     }
 
-    //    private func configureButtonSize() {
-    //        let buttonWidth = view.frame.width * 0.2
-    //        let buttonHeight = buttonWidth
-    //        addTodoButton.frame.size = CGSize(width: buttonWidth, height: buttonHeight)
-    //        addTodoButton.layer.cornerRadius = addTodoButton.frame.width * 0.5
-    //    }
-
-    // Cellのレイアウトを構築
+    /// Cellのレイアウトを構築
     private func setUpCollectionView() {
         collectionView.delegate = self
         configureHierarchy()
         configureDataSource()
     }
 
+    /// タスク追加画面を表示する
     private func showAddTodoVC() {
         let addTodoVC = UIStoryboard(name: AddTodoViewController.storyboardName, bundle: nil).instantiateViewController(withIdentifier: AddTodoViewController.identifier) as! AddTodoViewController
 
@@ -89,6 +85,7 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController {
+    /// CollectionViewに設定したレイアウトを適用させる
     private func configureHierarchy() {
         collectionView.collectionViewLayout = createLayout()
     }
@@ -135,6 +132,7 @@ extension ViewController {
 
 // CollectionViewのLayoutを定義
 extension ViewController {
+    /// CollectionViewのレイアウトを構築する
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             guard let sectionKind = Section(rawValue: sectionIndex) else { return nil }
@@ -200,6 +198,7 @@ extension ViewController {
 }
 
 extension ViewController {
+    /// アプリ起動時にデータを適用する
     private func applyInitialSnapshots(todos: [String]) {
         // データをViewに反映させる為のDiffableDataSourceSnapshotクラスのインスタンスを生成
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
@@ -222,7 +221,7 @@ extension ViewController {
         timeLineItemSnapshot.append(timelineItems)
         dataSource.apply(timeLineItemSnapshot, to: .timeLine, animatingDifferences: true)
     }
-    /// 新たなsnapshotをDataSourceにapplyしてデータ更新
+    /// Todoセクションのデータを更新する
     private func applyTodoSnapshot(todoList: [String]) {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         let todoItems = todoList.map { Item.todo($0) }
@@ -231,6 +230,7 @@ extension ViewController {
         dataSource.apply(snapshot, to: .todoList, animatingDifferences: true)
     }
 
+    /// タイムラインセクションのデータを更新する
     private func applyTimeLineSnapshot(timelineContents: [String]) {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         let timeLineItems = timelineContents.map { Item.todo($0) }
@@ -248,6 +248,7 @@ extension ViewController {
         completion()
     }
 
+    ///  完了したタスクをリストの最上部に表示させる
     private func addTimeLineContent(todo: String) {
         timelineContentList.insert(todo, at: 0)
         applyTimeLineSnapshot(timelineContents: timelineContentList)
