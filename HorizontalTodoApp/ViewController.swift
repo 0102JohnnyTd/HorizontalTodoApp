@@ -75,9 +75,10 @@ final class ViewController: UIViewController {
     private func showAddTodoVC() {
         let addTodoVC = UIStoryboard(name: AddTodoViewController.storyboardName, bundle: nil).instantiateViewController(withIdentifier: AddTodoViewController.identifier) as! AddTodoViewController
 
-        addTodoVC.completion = { text in
-            self.todoList.append(text)
-            self.applyTodoSnapshot(todoList: self.todoList)
+        addTodoVC.completion = { [weak self] text in
+            guard let strongSelf = self else { return }
+            strongSelf.todoList.append(text)
+            strongSelf.applyTodoSnapshot(todoList: strongSelf.todoList)
         }
 
         present(addTodoVC, animated: true)
