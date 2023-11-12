@@ -8,6 +8,7 @@
 import UIKit
 
 final class TodoCell: UICollectionViewCell {
+    @IBOutlet private weak var iconView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
 
     static let nib = UINib(nibName: String(describing: TodoCell.self), bundle: nil)
@@ -22,19 +23,22 @@ final class TodoCell: UICollectionViewCell {
     // 💡呼び出し時点で制約が確定しており、その制約をもとにViewのレイアウトを実行する
     override func layoutSubviews() {
         // Viewを円形にする
-        self.layer.cornerRadius = self.frame.width * 0.5
+        iconView.layer.cornerRadius = iconView.frame.width * 0.5
+        iconView.frame.size = CGSize(width: self.frame.width, height: self.frame.height * 0.9)
+        nameLabel.frame.size = CGSize(width: self.frame.width, height: self.frame.height * 0.1)
         // backgroundViewのViewからはみ出た部分などを非表示にする
-        self.layer.masksToBounds = true
+//        self.layer.masksToBounds = true
     }
 
     ///  BackgroundViewを生成する
     private func setUpBackgroundView() {
         backgroundView = UIView(frame: super.frame)
-        backgroundView?.backgroundColor = .red
+        backgroundView?.backgroundColor = .systemBackground
     }
 
     /// 自身のオブジェクトに値を代入する
     func configure(name: String?) {
+        iconView.image = UIImage(named: "Icon")
         nameLabel.text = name
     }
 }
