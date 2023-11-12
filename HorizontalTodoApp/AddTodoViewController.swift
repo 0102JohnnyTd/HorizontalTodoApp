@@ -26,11 +26,15 @@ final class AddTodoViewController: UIViewController {
 
     private func addTodo() {
         if let completion = self.completion {
-            if textField.text!.isEmpty {
+            let trimmedText = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            print(trimmedText)
+
+            guard !trimmedText.isEmpty else {
                 showIsEmptyAlert()
-            } else {
-                completion(textField.text!)
+                return
             }
+            // !trimmedText.isEmpty だったら、return せず以下の処理が実行される
+            completion(trimmedText)
         }
         // 遷移元へ戻る
         self.dismiss(animated: true, completion: nil)
@@ -38,11 +42,7 @@ final class AddTodoViewController: UIViewController {
 
     private func showIsEmptyAlert() {
         let alertController = UIAlertController(title: "エラー", message: "タスクを入力してください", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
-            guard let strongSelf = self else { return }
-            strongSelf.dismiss(animated: true)
-        }))
-
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
         present(alertController, animated: true)
     }
 }
