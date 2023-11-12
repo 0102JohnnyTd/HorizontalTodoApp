@@ -26,12 +26,23 @@ final class AddTodoViewController: UIViewController {
 
     private func addTodo() {
         if let completion = self.completion {
-            if let text = textField.text {
-                // 入力値を引数として渡された処理の実行
-                completion(text)
+            if textField.text!.isEmpty {
+                showIsEmptyAlert()
+            } else {
+                completion(textField.text!)
             }
         }
         // 遷移元へ戻る
         self.dismiss(animated: true, completion: nil)
+    }
+
+    private func showIsEmptyAlert() {
+        let alertController = UIAlertController(title: "エラー", message: "タスクを入力してください", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+            guard let strongSelf = self else { return }
+            strongSelf.dismiss(animated: true)
+        }))
+
+        present(alertController, animated: true)
     }
 }

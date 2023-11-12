@@ -61,7 +61,12 @@ final class ViewController: UIViewController {
     /// ボタンのUIを構築
     private func configureButton() {
         addTodoButton.backgroundColor = .green
-        addTodoButton.layer.masksToBounds = true
+        // 影の濃さ
+        addTodoButton.layer.shadowOpacity = 0.2
+        // 影のぼかしの大きさ
+        addTodoButton.layer.shadowRadius = 2
+        // 影の方向（width=右方向、height=下方向）
+        addTodoButton.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
 
     /// Cellのレイアウトを構築
