@@ -9,24 +9,24 @@ import UIKit
 
 final class ViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
-    
+
     @IBOutlet private weak var addTodoButton: UIButton!
-    
+
     @IBAction private func didTapAddTodoButton(_ sender: Any) {
         print("ボタンのサイズ：", addTodoButton.frame.size)
         showAddTodoVC()
     }
-    
+
     /// DiffableDataSourceに渡すItemを管理
     private enum Item: Hashable {
         case todo(String)
     }
-    
+
     // データソースに追加するSection
     private enum Section: Int, CaseIterable {
         case todoList
         case timeLine
-        
+
         // Sectionごとの列数を返す
         var columnCount: Int {
             switch self {
@@ -37,53 +37,53 @@ final class ViewController: UIViewController {
             }
         }
     }
-    
+
     /// アプリに表示させるドメインデータを要素とした配列
     private var todoList = ["タスク1", "タスク2", "タスク3", "タスク4", "タスク5"]
     private var timelineContentList = ["ゴリラに水やり", "トマトにバナナあげる"]
-    
+
     ///  CollectionViewに表示するデータを管理
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCollectionView()
         configureButton()
         applyInitialSnapshots(todos: todoList)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         addTodoButton.layer.cornerRadius = addTodoButton.frame.width * 0.5
     }
-    
+
     private func configureButton() {
         addTodoButton.backgroundColor = .green
         addTodoButton.layer.masksToBounds = true
     }
-    
+
     //    private func configureButtonSize() {
     //        let buttonWidth = view.frame.width * 0.2
     //        let buttonHeight = buttonWidth
     //        addTodoButton.frame.size = CGSize(width: buttonWidth, height: buttonHeight)
     //        addTodoButton.layer.cornerRadius = addTodoButton.frame.width * 0.5
     //    }
-    
+
     // Cellのレイアウトを構築
     private func setUpCollectionView() {
         collectionView.delegate = self
         configureHierarchy()
         configureDataSource()
     }
-    
+
     private func showAddTodoVC() {
         let addTodoVC = UIStoryboard(name: AddTodoViewController.storyboardName, bundle: nil).instantiateViewController(withIdentifier: AddTodoViewController.identifier) as! AddTodoViewController
-        
+
         addTodoVC.completion = { text in
             self.todoList.append(text)
             self.applyTodoSnapshot(todoList: self.todoList)
         }
-        
+
         present(addTodoVC, animated: true)
     }
 }
@@ -92,7 +92,7 @@ extension ViewController {
     private func configureHierarchy() {
         collectionView.collectionViewLayout = createLayout()
     }
-    
+
     /// Datasourceを構築
     private func configureDataSource() {
         // TodoCellの登録
@@ -103,7 +103,7 @@ extension ViewController {
                 cell.configure(name: todo)
             }
         }
-        
+
         // TimeLineCellの登録
         let timeLineCellRegistration = UICollectionView.CellRegistration<TimeLineCell, Item>(cellNib: TimeLineCell.nib) { cell, _, item in
             switch item {
@@ -111,7 +111,7 @@ extension ViewController {
                 cell.configure(todo: todo)
             }
         }
-        
+
         // dataSourceの構築
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { collectionView, indexPath, item -> UICollectionViewCell? in
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section") }
@@ -140,10 +140,10 @@ extension ViewController {
             guard let sectionKind = Section(rawValue: sectionIndex) else { return nil }
             // Sectionごとの列数を代入
             let columns = sectionKind.columnCount
-            
-            
+
+
             let section: NSCollectionLayoutSection
-            
+
             switch sectionKind {
             case .todoList:
                 // Itemのサイズを定義
@@ -152,14 +152,14 @@ extension ViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 // Itemの上下左右間隔を指定
                 item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-                
+
                 // Groupのサイズを定義
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalWidth(0.2))
                 // Groupを生成
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                                repeatingSubitem: item,
                                                                count: columns)
-                
+
                 // Sectionを生成
                 section = NSCollectionLayoutSection(group: group)
                 // Section間のスペース
@@ -168,7 +168,7 @@ extension ViewController {
                 section.orthogonalScrollingBehavior = .continuous
                 // Sectionの上下左右間隔を指定
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-                
+
                 return section
             case .timeLine:
                 // Itemのサイズを定義
@@ -177,21 +177,21 @@ extension ViewController {
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 // Itemの上下左右間隔を指定
                 item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 4, bottom: 4, trailing: 4)
-                
+
                 // Groupのサイズを定義
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalWidth(0.2))
                 // Groupを生成
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                                repeatingSubitem: item,
                                                                count: columns)
-                
+
                 // Sectionを生成
                 section = NSCollectionLayoutSection(group: group)
                 // Section間のスペース
                 section.interGroupSpacing = 10
                 // Sectionの上下左右間隔を指定
                 section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
-                
+
                 return section
             }
         }
@@ -203,11 +203,11 @@ extension ViewController {
     private func applyInitialSnapshots(todos: [String]) {
         // データをViewに反映させる為のDiffableDataSourceSnapshotクラスのインスタンスを生成
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        
+
         // snapshotにSectionを追加
         snapshot.appendSections(Section.allCases)
         dataSource.apply(snapshot)
-        
+
         // dataSourceに適応させるSectionSnapshotのインスタンスを生成
         var todoSnapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         // String型の値をItem型に変換した配列を生成
@@ -216,7 +216,7 @@ extension ViewController {
         todoSnapshot.append(todoItems)
         // snapshotをdataSourceに適用し、todoListに追加
         dataSource.apply(todoSnapshot, to: .todoList, animatingDifferences: true)
-        
+
         var timeLineItemSnapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         let timelineItems = timelineContentList.map { Item.todo($0) }
         timeLineItemSnapshot.append(timelineItems)
@@ -226,15 +226,15 @@ extension ViewController {
     private func applyTodoSnapshot(todoList: [String]) {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         let todoItems = todoList.map { Item.todo($0) }
-        
+
         snapshot.append(todoItems)
         dataSource.apply(snapshot, to: .todoList, animatingDifferences: true)
     }
-    
+
     private func applyTimeLineSnapshot(timelineContents: [String]) {
         var snapshot = NSDiffableDataSourceSectionSnapshot<Item>()
         let timeLineItems = timelineContents.map { Item.todo($0) }
-        
+
         snapshot.append(timeLineItems)
         dataSource.apply(snapshot, to: .timeLine, animatingDifferences: true)
     }
@@ -247,24 +247,29 @@ extension ViewController {
         applyTodoSnapshot(todoList: todoList)
         completion()
     }
-    
+
     private func addTimeLineContent(todo: String) {
-        print(#function)
         timelineContentList.insert(todo, at: 0)
-        print("timelineContentList:", timelineContentList)
         applyTimeLineSnapshot(timelineContents: timelineContentList)
     }
 }
 
 extension ViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let listItem = dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        switch listItem {
-        case .todo(let todo):
-            clearTodo(todo: todo) {
-                addTimeLineContent(todo: todo)
+        guard let sectionKind = Section(rawValue: indexPath.section) else { return }
+
+        switch sectionKind {
+        case .todoList:
+            guard let listItem = dataSource.itemIdentifier(for: indexPath) else { return }
+
+            switch listItem {
+            case .todo(let todo):
+                clearTodo(todo: todo) {
+                    addTimeLineContent(todo: todo)
+                }
             }
+        case .timeLine:
+            print("Did tap timeLineCell.")
         }
     }
 }
