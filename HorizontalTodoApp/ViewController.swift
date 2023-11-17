@@ -38,6 +38,15 @@ final class ViewController: UIViewController {
         }
     }
 
+    struct ElementKind {
+        static let badge = "badge-element-kind"
+        static let background = "background-element-kind"
+        static let sectionHeader = "section-header-element-kind"
+        static let sectionFooter = "section-footer-element-kind"
+        static let layoutHeader = "layout-header-element-kind"
+        static let layoutFooter = "layout-footer-element-kind"
+    }
+
     /// アプリに表示させるドメインデータを要素とした配列
     private var todoList = ["タスク1", "タスク2", "タスク3", "タスク4", "タスク5"]
     /// アプリに表示させるドメインデータを要素とした配列
@@ -107,6 +116,15 @@ extension ViewController {
             }
         }
 
+        // Todoセクションに表示させるヘッダーの登録
+        let TodoSectionHeaderRegistration = UICollectionView.SupplementaryRegistration<TodoSectionHeaderView>(elementKind: ElementKind.sectionHeader) { (supplementaryView, string, indexPath) in
+            
+            print("stringの中身：", string)
+            print("supplementaryViewの中身：", supplementaryView)
+
+            supplementaryView.configure(name: "Todo")
+        }
+
         // TimeLineCellの登録
         let timeLineCellRegistration = UICollectionView.CellRegistration<TimeLineCell, Item>(cellNib: TimeLineCell.nib) { cell, _, item in
             switch item {
@@ -133,6 +151,20 @@ extension ViewController {
                 )
             }
         })
+
+        dataSource.supplementaryViewProvider = { [weak self] (view, kind, index) in
+            guard let strongSelf = self else { fatalError("Unexpected Error") }
+            guard let section = Section(rawValue: index.section) else { fatalError("Unknown section") }
+            switch section {
+            case .todoList:
+                return strongSelf.collectionView.dequeueConfiguredReusableSupplementary(
+                    using: TodoSectionHeaderRegistration,
+                    for: index
+                )
+            case .timeLine:
+                return nil
+            }
+        }
     }
 }
 
@@ -172,6 +204,19 @@ extension ViewController {
                 section.orthogonalScrollingBehavior = .continuous
                 // Sectionの上下左右間隔を指定
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+                // ヘッダーのサイズを定義
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.2))
+
+                // ヘッダーを作成
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: ElementKind.sectionHeader,
+                    alignment: .top
+                )
+
+                // セクションに作成したヘッダーを追加
+                section.boundarySupplementaryItems = [sectionHeader]
 
                 return section
             case .timeLine:
@@ -280,4 +325,3 @@ extension ViewController: UICollectionViewDelegate {
         }
     }
 }
-
