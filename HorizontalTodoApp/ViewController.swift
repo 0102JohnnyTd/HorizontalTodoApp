@@ -117,13 +117,21 @@ extension ViewController {
         }
 
         // Todoセクションに表示させるヘッダーの登録
-        let TodoSectionHeaderRegistration = UICollectionView.SupplementaryRegistration<TodoSectionHeaderView>(elementKind: ElementKind.sectionHeader) { (supplementaryView, string, indexPath) in
-            
+        let TodoSectionHeaderRegistration = UICollectionView.SupplementaryRegistration<TodoSectionHeaderView>(supplementaryNib: TodoSectionHeaderView.nib, elementKind: ElementKind.sectionHeader) { (supplementaryView, string, indexPath) in
             print("stringの中身：", string)
             print("supplementaryViewの中身：", supplementaryView)
 
             supplementaryView.configure(name: "Todo")
         }
+
+        // ⚠️XIBファイル以外の実装方法(こっちで実装してしまっていた...)
+//        let TodoSectionHeaderRegistration =
+//        UICollectionView.SupplementaryRegistration<TodoSectionHeaderView>(elementKind: ElementKind.sectionHeader) { (supplementaryView, string, indexPath) in
+//            print("stringの中身：", string)
+//            print("supplementaryViewの中身：", supplementaryView)
+//
+//            supplementaryView.configure(name: "Todo")
+//        }
 
         // TimeLineCellの登録
         let timeLineCellRegistration = UICollectionView.CellRegistration<TimeLineCell, Item>(cellNib: TimeLineCell.nib) { cell, _, item in
