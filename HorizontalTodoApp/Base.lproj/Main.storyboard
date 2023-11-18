@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Zgq-YN-YHq">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <rect key="frame" x="0.0" y="67" width="393" height="751"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="n9P-hB-j9H">
                                     <size key="itemSize" width="128" height="128"/>
@@ -48,9 +48,9 @@
                         <color key="backgroundColor" systemColor="systemMintColor"/>
                         <constraints>
                             <constraint firstItem="Zgq-YN-YHq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="CXX-4X-6Wb"/>
-                            <constraint firstItem="Zgq-YN-YHq" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Lxh-yo-tc4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Zgq-YN-YHq" secondAttribute="trailing" id="Lxh-yo-tc4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="tLF-ri-7Jy" secondAttribute="bottom" constant="24" id="arz-ba-Psa"/>
-                            <constraint firstItem="Zgq-YN-YHq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="cDH-jl-C4c"/>
+                            <constraint firstItem="Zgq-YN-YHq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="cDH-jl-C4c"/>
                             <constraint firstItem="Zgq-YN-YHq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="j7P-4l-lr4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tLF-ri-7Jy" secondAttribute="trailing" constant="24" id="meF-Qx-JFw"/>
                         </constraints>
@@ -70,7 +70,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -15,9 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSK-bt-0oD" customClass="nameLabel">
-                    <rect key="frame" x="16.000000000000004" y="20.333333333333336" width="42.333333333333343" height="19.333333333333336"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vSK-bt-0oD">
+                    <rect key="frame" x="4.0000000000000036" y="15.666666666666666" width="61.333333333333343" height="28.666666666666671"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -26,7 +26,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="vSK-bt-0oD" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="CAX-bW-mvh"/>
-                <constraint firstItem="vSK-bt-0oD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="GPM-8h-XfS"/>
+                <constraint firstItem="vSK-bt-0oD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="GPM-8h-XfS"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>

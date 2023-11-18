@@ -187,7 +187,7 @@ extension ViewController {
                 // Itemを生成
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 // Itemの上下左右間隔を指定
-                item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 4, trailing: 4)
 
                 // Groupのサイズを定義
                 let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.2), heightDimension: .fractionalWidth(0.2))
@@ -206,7 +206,7 @@ extension ViewController {
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
 
                 // ヘッダーのサイズを定義
-                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.2))
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.04))
 
                 // ヘッダーを作成
                 let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
